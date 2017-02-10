@@ -60,7 +60,7 @@ public class User implements Serializable {
     private String username;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Collection<Userrole> userroleCollection;
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "user")
     private Collection<Request> requestCollection;
 
     public User() {
@@ -174,7 +174,12 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "net.podolanski.dao.User[ userId=" + userId + " ]";
+        return "net.podolanski.dao.User[ userId=" + userId + " "
+                + "username=" + username + " " +
+                "lastname=" + lastname + " " +
+                "name=" + name + " " +
+                "mail=" + email + " " +
+                " ]";
     }
 
 }

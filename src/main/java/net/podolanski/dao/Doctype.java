@@ -48,7 +48,7 @@ public class Doctype implements Serializable {
     @JoinColumn(name = "transaction_id", referencedColumnName = "transaction_id")
     @ManyToOne
     private Transaction transactionId;
-    @OneToMany(mappedBy = "doctypeId")
+    @OneToMany(mappedBy = "docType")
     private Collection<Request> requestCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctype")
     private Collection<Connection> connectionCollection;

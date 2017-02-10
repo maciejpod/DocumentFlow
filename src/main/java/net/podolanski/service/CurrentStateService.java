@@ -81,10 +81,10 @@ public class CurrentStateService {
         currentStateList.forEach((cs) -> {
             Request request = cs.getRequest();
             Transaction transaction = transactionRepository
-                    .findNextTransaction(cs.getTransaction(), request.getDoctypeId());
+                    .findNextTransaction(cs.getTransaction(), request.getDocType());
 
-            if (!isLastStep(transaction, request.getDoctypeId())) {
-                Department newDepartment = cs.getDepartmentId();
+            if (!isLastStep(transaction, request.getDocType())) {
+                Department newDepartment = cs.getDepartment();
 
                 List<Userrole> userRole = userRoleRepository
                         .findByRoleAndDepartment(transaction.getRoleId(), newDepartment);
@@ -101,7 +101,7 @@ public class CurrentStateService {
 
     private boolean acceptStatusForOwnerRequest(List<Userrole> userRoleList, CurrentState currentState) {
         for (Userrole ur : userRoleList) {
-            if (ur.getUser().equals(currentState.getRequest().getUserId())) {
+            if (ur.getUser().equals(currentState.getRequest().getUser())) {
                 currentState.setStatusId(Status.Zatwierdzono);
                 return true;
             }
@@ -111,12 +111,12 @@ public class CurrentStateService {
 
     public void intializeFlow(Request request) {
         Transaction transaction
-                = transactionRepository.findFirstTransaction(request.getDoctypeId().getDoctypeId());
+                = transactionRepository.findFirstTransaction(request.getDocType().getDoctypeId());
         CurrentState currentState
-                = new CurrentState(request, transaction, request.getDepartmentId());
+                = new CurrentState(request, transaction, request.getDepartment());
 
         List<Userrole> userRole = userRoleRepository
-                .findByRoleAndDepartment(transaction.getRoleId(), request.getDepartmentId());
+                .findByRoleAndDepartment(transaction.getRoleId(), request.getDepartment());
 
         currentStateRepository.save(currentState);
         if (acceptStatusForOwnerRequest(userRole, currentState)) {

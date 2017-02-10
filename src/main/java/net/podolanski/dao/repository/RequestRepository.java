@@ -18,10 +18,12 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface RequestRepository extends CrudRepository<Request, Integer> {
     
-    List<Request> findFirst4ByUserId(User userId);
+    List<Request> findFirst4ByUser(User user);
     
     @Query("SELECT cs.request FROM CurrentState cs"
             + " JOIN cs.transaction t JOIN t.roleId ro JOIN ro.userroleCollection ur"
-            + " WHERE ur.user = ?1 AND ur.department = cs.departmentId")
-    List<Request> findToProced(User userId, Pageable pageable);
+            + " WHERE ur.user = ?1 AND ur.department = cs.department")
+    List<Request> findToProced(User user, Pageable pageable);
+    
+    List<Request> findByUser(User user);
 }

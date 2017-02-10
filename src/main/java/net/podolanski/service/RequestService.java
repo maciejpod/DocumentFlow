@@ -40,28 +40,13 @@ public class RequestService {
     UserRepository userRepository;
     
     //user id // doctype // status id // department id // content
-            
-    private final Status defualtStatus = Status.W_trakcie;
-    
-    void createNewRequest(NewRequestForm newRequestForm) {
-    /*    
-        User user = (User)authentication.getPrincipal();
-        Department department = departmentRepository.findOne(2);
-        Doctype doctype = doctypeRepository.findOne(1);
-        
-        Request request = new Request(user, "content", department, defualtStatus, doctype);
-        
-        requestRepository.save(request);
-        currentStateService.intializeFlow(request);*/
-    }
     
     public List<Request> findAll(User user) {
-        return requestRepository.findFirst4ByUserId(user);
+        return requestRepository.findByUser(user);
     }
     
     public void update(Request request) {
         requestRepository.save(request);
         currentStateService.intializeFlow(request);
-    }
-    
+    }        
 }

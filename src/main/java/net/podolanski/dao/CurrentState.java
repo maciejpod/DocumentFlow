@@ -8,7 +8,6 @@ package net.podolanski.dao;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,8 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -41,7 +38,7 @@ public class CurrentState implements Serializable {
     private Integer currentStateId;
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     @ManyToOne
-    private Department departmentId;
+    private Department department;
     @JoinColumn(name = "request_id", referencedColumnName = "request_id")
     @ManyToOne(optional = false)
     private Request request;
@@ -60,7 +57,7 @@ public class CurrentState implements Serializable {
         this.statusId = Status.W_trakcie;
         this.request = request;
         this.transaction = transaction;
-        this.departmentId = department;
+        this.department = department;
     }
 
     public CurrentState(Integer currentStateId) {
@@ -75,12 +72,12 @@ public class CurrentState implements Serializable {
         this.currentStateId = currentStateId;
     }
 
-    public Department getDepartmentId() {
-        return departmentId;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setDepartmentId(Department departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public Request getRequest() {

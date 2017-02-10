@@ -1,0 +1,203 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: #41778C;
+}
+
+.top {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 80px;
+}
+
+.profileBar {
+    width: 85%;
+    height: 100%;
+    margin-left: 15%;
+    padding-top: 15px;
+    padding-right: 15px;
+    background-color: #5A93A9;
+}
+
+.profile {
+    display: inline-block;
+    float: right;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 50%;
+    background: white;
+}
+
+.user {
+    display: inline-block;
+    float: right;
+    cursor: pointer;
+    margin-right: 15px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    line-height: 50px;
+    height: 50px;
+}
+
+.user:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.logoBar {
+    float: left;
+    background-color: #416B7B;
+    width: 15%;
+    height: 100%;
+}
+
+.mid {
+    height: 100%;
+    width: 100%;
+}
+
+.sideBar {
+    position: fixed;
+    float: left;
+    width: 15%;
+    height: 100%;
+    background-color: #285F74;
+}
+
+.content {  
+    margin-top: 80px;
+    background-color: #41778C;
+    width: 85%;
+    height: 100%;
+    margin-left: 15%;
+}
+
+.request {
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 42.5%;
+    height: 40%;
+    text-shadow: 1px 1px black;
+    box-shadow: 3px 3px 2px black;
+    color: white;
+    background-color: #5894e8;
+    display: inline-block;
+}
+
+.requestContent {
+    overflow: auto;
+    height: 92%;
+}
+
+.requestContent h2 {
+    padding-top: 0px;
+    padding-bottom: 9px;
+    padding-left: 9px;
+}
+
+.requestFooter {   
+    height: 8%;
+    text-align: center;
+    background-color: #416B7B;
+}
+
+ul.sideBarMenu {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.sideBarMenu li {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid white;
+}
+
+ul.sideBarMenu li:hover {
+    background-color: #41778C;
+}
+
+.noresize {
+    resize: none; 
+}
+
+ul.sideBarMenu span {
+    color: white;
+    padding-right: 20px;
+}
+
+ul.sideBarMenu li a {
+    padding: 20px;
+    cursor: pointer;
+    color: white;
+}
+
+ul.sideBarMenu li a:hover, a:visited, a:link {
+    text-decoration: none;
+    color: white;
+}
+
+.newRequest {
+    padding: 20px;
+    padding-top: 0;
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 90%;
+    text-shadow: 1px 1px black;
+    box-shadow: 3px 3px 2px black;
+    color: white;
+    background-color: #5894e8;
+    display: inline-block;
+}
+
+.selectBox {
+    max-width: 300px;
+}
+
+.loginForm {
+    min-height: 200px;
+    min-width: 300px;
+    width: 30%;
+    height: 40%;
+    background-color: blue;
+
+    text-shadow: 1px 1px black;
+    box-shadow: 3px 3px 2px black;
+    color: white;
+    background-color: #5894e8;
+
+    position:absolute;
+    left:0; right:0;
+    top:0; bottom:0;
+    margin:auto;
+    
+    max-width:100%;
+    max-height:100%;
+    overflow:auto;
+
+    padding: 10px;
+}
+
+.newRequest {
+    padding: 20px;
+    padding-top: 0;
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 90%;
+    text-shadow: 1px 1px black;
+    box-shadow: 3px 3px 2px black;
+    color: white;
+    background-color: #5894e8;
+    display: inline-block;
+}
+
+ul.sideBarMenu .sub {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    background-color: #416B7B;
+    border-bottom: none;
+}

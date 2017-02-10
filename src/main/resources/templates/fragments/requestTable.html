@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div th:fragment="request-table(requestList)" class="table-responsive">
+            <table class="table table-condensed">
+                <tr>
+                    <td>Nr.</td>
+                    <td>Typ</td>
+                    <td>Status</td>
+                    <td>Wydział</td>
+                </tr>
+                <tr th:each="req: ${requestList}">
+                    <td th:text = "${req.requestId}"></td>
+                    <td th:text = "${req.docType.name}"></td>
+                    <td th:text = "${req.statusId}"></td>
+                    <td th:text = "${req.department.name}"></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

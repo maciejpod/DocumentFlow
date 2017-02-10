@@ -47,9 +47,9 @@ public class Department implements Serializable {
     private String name;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private Collection<Userrole> userroleCollection;
-    @OneToMany(mappedBy = "departmentId")
+    @OneToMany(mappedBy = "department")
     private Collection<CurrentState> currentStateCollection;
-    @OneToMany(mappedBy = "departmentId")
+    @OneToMany(mappedBy = "department")
     private Collection<Request> requestCollection;
     @OneToMany(mappedBy = "fKdepartmentid")
     private Collection<Department> departmentCollection;

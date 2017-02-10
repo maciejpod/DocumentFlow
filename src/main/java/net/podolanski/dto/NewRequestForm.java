@@ -61,5 +61,4 @@ public class NewRequestForm {
     public void setDocType(Doctype docType) {
         this.docType = docType;
     }
-
 }

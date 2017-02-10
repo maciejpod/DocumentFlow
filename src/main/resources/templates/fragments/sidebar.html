@@ -19,6 +19,15 @@ and open the template in the editor.
                         Dokumenty
                     </a>
                 </li>
+                <li class = "sub">
+                    <a th:href="@{/request/new}">Nowe zgłoszenie</a>
+                </li>
+                <li class = "sub">
+                    <a th:href="@{${#authentication.name} +'/request/'}">Twoje zgłoszenia</a>
+                </li>
+                <li class = "sub">
+                    <a th:href="@{/request/history}">Historia zgłoszeń</a>
+                </li>
                 <li>
                     <a>
                         <span class = "glyphicon glyphicon-tower"></span>

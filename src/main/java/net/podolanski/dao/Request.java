@@ -58,19 +58,21 @@ public class Request implements Serializable {
     private Collection<CurrentState> currentStateCollection;
     @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     @ManyToOne
-    private Department departmentId;
+    private Department department;
     @JoinColumn(name = "doctype_id", referencedColumnName = "doctype_id")
     @ManyToOne
-    private Doctype doctypeId;
+    private Doctype docType;
     @Column(name = "status_id")
     //@ManyToOne
     @Enumerated(EnumType.ORDINAL)
     private Status statusId;
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne
-    private User userId;
+    private User user;
 
     public Request() {
+        this.modifiedFlag = false;
+        this.statusId = Status.W_trakcie;
     }
 
     public Request(Integer requestId) {
@@ -78,13 +80,12 @@ public class Request implements Serializable {
     }
 
     public Request(User user, String content,
-            Department department, Status status, Doctype docType) {
-        this.modifiedFlag = false;
+            Department department, Doctype docType) {
+        this();
         this.content = content;
-        this.doctypeId = docType;
-        this.statusId = status;
-        this.departmentId = department;
-        this.userId = user;
+        this.docType = docType;
+        this.department = department;
+        this.user = user;
     }
 
     public Integer getRequestId() {
@@ -137,20 +138,20 @@ public class Request implements Serializable {
         this.currentStateCollection = currentStateCollection;
     }
 
-    public Department getDepartmentId() {
-        return departmentId;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setDepartmentId(Department departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
-    public Doctype getDoctypeId() {
-        return doctypeId;
+    public Doctype getDocType() {
+        return docType;
     }
 
-    public void setDoctypeId(Doctype doctypeId) {
-        this.doctypeId = doctypeId;
+    public void setDocType(Doctype docType) {
+        this.docType = docType;
     }
 
     public Status getStatusId() {
@@ -161,12 +162,12 @@ public class Request implements Serializable {
         this.statusId = statusId;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
