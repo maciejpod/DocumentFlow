@@ -17,9 +17,7 @@ public class DrmApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DrmApplication.class, args);
 	}
-        
-        
-        
+
         @Bean
         CommandLineRunner runner(
                     UserRepository ur,

@@ -8,11 +8,13 @@ package net.podolanski.service;
 import net.podolanski.dao.User;
 import net.podolanski.dao.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author maciej
  */
+@Service
 public class UserService {
     
     @Autowired

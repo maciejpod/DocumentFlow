@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div class="well" th:fragment="new-request">
+            <h3>New request</h3>
+            <br/>
+            <form class="form-horizontal" role="form" method="post" th:action="@{'/' + ${#authentication.name} +'/request/new'}"
+                  th:object="${requestForm}">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Document type:</label>
+                    <div class="col-lg-8">
+                        <select class="form-control" id="documentType" th:field="*{docType}" th:remove="all-but-first">
+                            <option th:each="doc : ${docList}" th:value = "${doc.name}"
+                                    th:text="${doc.name}">Document Type</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Department:</label>
+                    <div class="col-lg-8">
+                        <select class="form-control" id="documentType" th:field="*{department}" th:remove="all-but-first">
+                            <option th:each="dep : ${depList}" th:value = "${dep.name}"
+                                    th:text="${dep.name}">Document Type</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Content:</label>
+                    <div class="col-lg-8">
+                        <textarea class="form-control vresize" rows="10" id="comment"
+                                  th:field="*{content}"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-8">
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

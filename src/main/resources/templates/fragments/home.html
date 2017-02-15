@@ -1,0 +1,60 @@
+<html>
+    <body>
+        <div class="row" th:fragment="home">
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-body request-panel">  
+                            <h3>Zgłoszenia do zatwierdzenia</h3> 
+                            <br/>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-short">
+                                    <thead>
+                                        <tr>
+                                            <th>Request no.</th>
+                                            <th>Type</th>
+                                            <th>Department</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="request: ${requestList}">
+                                            <td th:text="${request.requestId}"></td>
+                                            <td th:text="${request.docType.name}"></td>
+                                            <td th:text="${request.department.name}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="panel-footer request-panel-footer">Panel Footer</div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-body request-panel">  
+                            <h3>Zgłoszenia do zatwierdzenia</h3> 
+                            <br/>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-short">
+                                    <thead>
+                                        <tr>
+                                            <th>Request no.</th>
+                                            <th>Type</th>
+                                            <th>Department</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="request: ${proceedList}">
+                                            <td th:text="${request.requestId}"></td>
+                                            <td th:text="${request.docType.name}"></td>
+                                            <td th:text="${request.department.name}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="panel-footer request-panel-footer">Panel Footer</div>
+                    </div>
+                </div>
+            </div>
+    </body>
+</html>

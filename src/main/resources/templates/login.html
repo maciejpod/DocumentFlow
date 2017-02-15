@@ -13,19 +13,18 @@
     </head>
     <body>
         <div class = "loginForm">
-            <form th:action="@{/login}" method="POST">
+            <div class="center-block"><h2>Login</h2></div>
+            <form method="post" th:action="@{/login}">
                 <div class="form-group">
-                    <label for="email">Email address:</label>
+                    <label for="text">Username:</label>
                     <input type="text" class="form-control" name="username"/>
-                </div>  
+                </div>
                 <div class="form-group">
                     <label for="pwd">Password:</label>
                     <input type="password" class="form-control" name="password"/>
                 </div>
-                <div class = "actionForm">
-                    <button type="submit" class="btn btn-default">Submit</button>
-                    <a href="#" class="btn btn-default" role="button">Link Button</a>
-                </div>
+                <br/>
+                <button type="submit" class="btn btn-default center-block">Submit</button>
             </form>
         </div>
     </body>

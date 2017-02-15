@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div th:fragment="xs-nav">
+            <nav class="navbar navbar-default black visible-xs" >
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" th:href="@{'/home'}">WebSiteName</a>
+                    </div>
+                </div>
+            </nav>
+            <nav class="navbar navbar-default hidden-xs">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" th:href="@{'/home'}">WebSiteName</a>
+                    </div>
+                </div>
+            </nav>
+            <nav class="navbar navbar-default visible-xs dup">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle " data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>                        
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#" data-toggle="collapse" data-target="#demo">Profil</a></li>
+                            <ul class="nav nav-list collapse" id="demo">
+                                <li><a href="#">Dane</a></li>
+                                <li><a href="#">Zatrudnienie</a></li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </body>
+</html>

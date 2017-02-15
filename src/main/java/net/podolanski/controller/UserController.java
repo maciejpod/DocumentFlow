@@ -38,7 +38,7 @@ public class UserController {
 
     @GetMapping("/{user}")
     public ModelAndView initUserForm(@PathVariable User user) {
-        ModelAndView mav = new ModelAndView("userdetails");
+        ModelAndView mav = new ModelAndView("user-details");
         UserForm userForm = mapper.map(user, UserForm.class);
         mav.addObject("userDetails", userForm);
         mav.addObject("passwordForm", new PasswordChange());

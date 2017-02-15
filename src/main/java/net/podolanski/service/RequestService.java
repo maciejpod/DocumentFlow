@@ -7,16 +7,12 @@ package net.podolanski.service;
 
 import java.util.List;
 import net.podolanski.dao.Request;
-import net.podolanski.dao.Status;
 import net.podolanski.dao.User;
 import net.podolanski.dao.repository.DepartmentRepository;
 import net.podolanski.dao.repository.DoctypeRepository;
 import net.podolanski.dao.repository.RequestRepository;
 import net.podolanski.dao.repository.UserRepository;
-import net.podolanski.dto.NewRequestForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.stereotype.Service;
 
@@ -39,13 +35,16 @@ public class RequestService {
     @Autowired
     UserRepository userRepository;
     
-    //user id // doctype // status id // department id // content
-    
     public List<Request> findAll(User user) {
         return requestRepository.findByUser(user);
     }
     
+    public List<Request> findRequestToProceed(User user) {
+        return requestRepository.findToProced(user, null);
+    }
+    
     public void update(Request request) {
+        //usunac ?
         requestRepository.save(request);
         currentStateService.intializeFlow(request);
     }        

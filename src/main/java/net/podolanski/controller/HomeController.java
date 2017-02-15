@@ -7,12 +7,10 @@ package net.podolanski.controller;
 
 import net.podolanski.service.RequestService;
 import net.podolanski.dao.User;
-import net.podolanski.dao.repository.RequestRepository;
 import net.podolanski.dao.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,9 +30,6 @@ public class HomeController {
     RequestService requestService;
 
     @Autowired
-    RequestRepository requestRepository;
-
-    @Autowired
     UserRepository userRepository;
 
     @RequestMapping("/login")
@@ -47,8 +42,8 @@ public class HomeController {
         User user = (User) authentication.getPrincipal();
         ModelAndView mav = new ModelAndView("home");
         mav.addObject("requestList", requestService.findAll(user));
-        mav.addObject("procedList", requestRepository
-                .findToProced(user, new PageRequest(0, 3)));
+        mav.addObject("proceedList", requestService
+                .findRequestToProceed(user));
         return mav;
     }
 }

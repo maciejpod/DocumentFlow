@@ -1,0 +1,30 @@
+<html>
+    <body>
+        <div class="well" th:fragment="request-list(requestList, tableName)">
+            <h3 th:text = "${tableName}"></h3>
+            <br/>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Department</th>
+                            <th>Modified</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="req: ${requestList}">
+                            <td th:text = "${req.requestId}"></td>
+                            <td th:text = "${req.docType.name}"></td>
+                            <td th:text = "${req.statusId}"></td>
+                            <td th:text = "${req.department.name}"></td>
+                            <td th:text = "${req.modifiedFlag}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+    </body>
+</html>
