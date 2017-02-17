@@ -5,13 +5,23 @@
  */
 package net.podolanski.dto;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  *
  * @author maciej
  */
 public class PasswordChange {
+
+    private String userPassword;
     private String oldPassword;
+    @Min(6)
+    @Max(20)
     private String newPassword;
+    @Min(6)
+    @Max(20)
     private String repeatedPassword;
 
     /**
@@ -54,5 +64,19 @@ public class PasswordChange {
      */
     public void setRepeatedPassword(String repeatedPassword) {
         this.repeatedPassword = repeatedPassword;
+    }
+
+    /**
+     * @return the userPassword
+     */
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    /**
+     * @param userPassword the userPassword to set
+     */
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 }

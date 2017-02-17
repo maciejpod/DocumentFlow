@@ -7,6 +7,7 @@ package net.podolanski.dao.repository;
 
 import java.util.List;
 import net.podolanski.dao.Department;
+import net.podolanski.dao.Role;
 import net.podolanski.dao.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,8 +16,9 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author maciej
  */
-public interface DepartmentRepository extends CrudRepository<Department, Integer>{
+public interface RoleRepository extends CrudRepository<Role, Integer>{
     
-    Department findByName(String name);
-
+    @Query("SELECT ur.role FROM  Userrole ur WHERE ur.user = ?1 and ur.department = ?2")
+    List<Role> findRoleByDepartment(User user, Department department);
+    
 }

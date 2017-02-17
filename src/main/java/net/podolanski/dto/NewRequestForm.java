@@ -7,6 +7,7 @@ package net.podolanski.dto;
 
 import net.podolanski.dao.Department;
 import net.podolanski.dao.Doctype;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -14,6 +15,7 @@ import net.podolanski.dao.Doctype;
  */
 public class NewRequestForm {
 
+    @NotBlank
     private String content;
 
     private Department department;

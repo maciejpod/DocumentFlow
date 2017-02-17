@@ -29,7 +29,7 @@ public class TransactionService {
     @Autowired
     ConnectionRepository connectionRepository;
 
-    List<Transaction> getDocumentFlow(Doctype doctype) {        
+    public List<Transaction> getDocumentFlow(Doctype doctype) {        
         return getSortedConnections(doctype)
                 .stream()
                 .map((n) -> n.getTransaction())

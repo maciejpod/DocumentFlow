@@ -9,18 +9,27 @@
         <link rel="stylesheet" type="text/css" th:href="@{/assets/css/test.css}" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script th:src="@{/js/utils.js}"></script>
     </head>
     <body>
-        
+
         <div th:replace="fragments/nav-bar-xs :: xs-nav"></div>
         <div class="container-fluid">
             <div th:replace="fragments/side-bar :: side-bar"></div>
             <div class="row content">
                 <div class="col-sm-9">
-                    <div th:replace="/fragments/home :: home"></div>
+                    <div th:replace="/fragments/user-departments :: user-departments"></div>
                 </div>
             </div>
         </div>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            $(document).ready(function () {
+                activateMenu('#profile-menu-button');
+                setActive('#profile-menu', 1);
+            });
+            /*]]>*/
+        </script>
         <!--
                 <div class = "mid">
                     <div th:replace="fragments/sidebar :: sidebar"></div>

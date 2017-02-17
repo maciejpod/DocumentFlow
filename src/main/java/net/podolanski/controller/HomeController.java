@@ -7,7 +7,9 @@ package net.podolanski.controller;
 
 import net.podolanski.service.RequestService;
 import net.podolanski.dao.User;
+import net.podolanski.dao.repository.RoleRepository;
 import net.podolanski.dao.repository.UserRepository;
+import net.podolanski.service.UserRoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
     Logger log = LoggerFactory.getLogger(HomeController.class);
-
-    @Autowired
-    RequestService requestService;
-
-    @Autowired
-    UserRepository userRepository;
+    @Autowired RequestService requestService;
+    @Autowired UserRepository userRepository;
 
     @RequestMapping("/login")
     String login() {

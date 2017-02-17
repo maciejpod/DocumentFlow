@@ -3,20 +3,22 @@
     <body>
         <div class="col-sm-2 sidenav hidden-xs" th:fragment="side-bar">
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#" data-toggle="collapse" data-target="#test">Profil</a></li>
-                <ul class="nav nav-list collapse" id="test">
+                <li class="active"><a href="#" data-toggle="collapse" data-target="#profile-menu" id="profile-menu-button">Profil</a></li>
+               <!-- CSS wydzielic -->
+                <ul class="nav nav-pills nav-stacked collapse center-block" style="margin-top: 10px; width:80%;"  id="profile-menu">
                     <li><a th:href="@{'/user/' + ${#authentication.name}}">Dane</a></li>
-                    <li><a href="#">Zatrudnienie</a></li>
+                    <li><a th:href="@{'/' + ${#authentication.name} +'/role/'}">Zatrudnienie</a></li>
                 </ul>
             </ul>
             <br/>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#" data-toggle="collapse" data-target="#test1">Dokumenty</a></li>
-                <ul class="nav nav-list collapse" id="test1">
+                <li class="active"><a href="#" data-toggle="collapse" data-target="#request-menu" id="request-menu-button">Dokumenty</a></li>
+                <!-- CSS wydzielic -->
+                <ul class="nav nav-pills nav-stacked collapse center-block" style="margin-top: 10px; width:80%;" id="request-menu">
                     <li><a th:href="@{'/' + ${#authentication.name} +'/request/'}">Twoje dokumenty</a></li>
                     <li><a th:href="@{'/' + ${#authentication.name} +'/request/proceed'}">Do zatwierdzenia</a></li>
                     <li><a th:href="@{'/' + ${#authentication.name} +'/request/new'}">Nowe zgłoszenie</a></li>
-                    <li><a href="#">Historia zgłoszeń</a></li>
+                    <li><a>Historia zgłoszeń</a></li>
                 </ul>
             </ul>
         </div>

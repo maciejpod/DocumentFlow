@@ -6,8 +6,10 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/assets/css/test.css}" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script th:src="@{/js/utils.js}"></script>
     </head>
     <body>
 
@@ -20,14 +22,14 @@
                 </div>
             </div>
         </div>
-        <!--
-                <div class = "mid">
-                    <div th:replace="fragments/sidebar :: sidebar"></div>
-                    <div class = "content">
-                        <div th:replace="fragments/requestShort :: shortRequest(${requestList}, 'Twoje zgłoszenia')"></div>
-                        <div th:replace="fragments/requestShort :: shortRequest(${procedList}, 'Do zatwierdzenia')"></div>
-                    </div>
-                </div>   
-        -->
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            $(document).ready(function () {
+                reloadStepWizard();
+                activateMenu('#request-menu-button');
+                setActive('#request-menu', 0);
+            });
+            /*]]>*/
+        </script>
     </body>
 </html>
