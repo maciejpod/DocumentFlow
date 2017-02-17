@@ -1,0 +1,22 @@
+<html>
+    <body>
+        <div class="row" th:fragment="user-departments">
+            <div class="col-md-offset-4 col-sm-4" th:each="roles: ${userRole}">
+                <ul class="list-group">
+                    <li class="list-group-item" style="text-align:center;"><h3 th:text="${roles.key.name}">Second item</h3>
+                        <ul class="list-group" style="margin-top: 20px" th:each="role : ${roles.value}">
+                            <li class="list-group-item" th:text="${role.name}">First item</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </body>
+</html>
+
+<!--
+<div th:each="userEnrty: ${userMap}">
+<p th:text="${userEntry.key}">No Id!</p>
+<p th:text="${userEntry.value}">No Name!</p>
+</div>
+-->
