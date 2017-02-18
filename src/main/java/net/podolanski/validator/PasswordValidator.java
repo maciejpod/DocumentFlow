@@ -26,7 +26,7 @@ public class PasswordValidator implements Validator {
     PasswordEncoder passwordEncoder;
 
     Logger logger = LoggerFactory.getLogger(PasswordValidator.class);
-    
+
     @Override
     public boolean supports(Class<?> type) {
         return PasswordChange.class.equals(type);
@@ -35,19 +35,15 @@ public class PasswordValidator implements Validator {
     @Override
     public void validate(Object obj, Errors errors) {
         PasswordChange passwordChange = (PasswordChange) obj;
-        
+
         if (!passwordEncoder.matches(passwordChange.getOldPassword(),
                 passwordChange.getUserPassword())) {
             errors.rejectValue("oldPassword", "wrongPassword", "Invalid password!");
         }
-        
-        if(!passwordChange.getNewPassword().equals(passwordChange.getRepeatedPassword())) {
-            errors.rejectValue("repeatedPassword", "notSamePasswords", 
+
+        if (!passwordChange.getNewPassword().equals(passwordChange.getRepeatedPassword())) {
+            errors.rejectValue("repeatedPassword", "notSamePasswords",
                     "Password and Confirmation password do not match!");
         }
-        
-        
-
     }
-
 }

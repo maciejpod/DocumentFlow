@@ -40,16 +40,11 @@ public class Doctype implements Serializable {
     private Integer doctypeId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
     @Column(name = "name")
     private String name;
     @JoinColumn(name = "transaction_id", referencedColumnName = "transaction_id")
     @ManyToOne
     private Transaction transactionId;
-    @OneToMany(mappedBy = "docType")
-    private Collection<Request> requestCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctype")
-    private Collection<Connection> connectionCollection;
 
     public Doctype() {
     }
@@ -85,24 +80,6 @@ public class Doctype implements Serializable {
 
     public void setTransactionId(Transaction transactionId) {
         this.transactionId = transactionId;
-    }
-
-    @XmlTransient
-    public Collection<Request> getRequestCollection() {
-        return requestCollection;
-    }
-
-    public void setRequestCollection(Collection<Request> requestCollection) {
-        this.requestCollection = requestCollection;
-    }
-
-    @XmlTransient
-    public Collection<Connection> getConnectionCollection() {
-        return connectionCollection;
-    }
-
-    public void setConnectionCollection(Collection<Connection> connectionCollection) {
-        this.connectionCollection = connectionCollection;
     }
 
     @Override

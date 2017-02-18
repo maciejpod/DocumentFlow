@@ -7,6 +7,7 @@ package net.podolanski.converter;
 
 import net.podolanski.dao.User;
 import net.podolanski.dao.repository.UserRepository;
+import net.podolanski.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -19,11 +20,11 @@ import org.springframework.stereotype.Component;
 public class UserConverter implements Converter<String, User>{
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
     
     @Override
     public User convert(String username) {
-        return userRepository.findByUsername(username);
+        return userService.findByUsername(username);
     }
     
 }

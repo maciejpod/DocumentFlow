@@ -18,10 +18,8 @@ public class PasswordChange {
     private String userPassword;
     private String oldPassword;
     @Min(6)
-    @Max(20)
     private String newPassword;
     @Min(6)
-    @Max(20)
     private String repeatedPassword;
 
     /**

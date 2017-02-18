@@ -7,6 +7,7 @@ package net.podolanski.service;
 
 import java.util.List;
 import net.podolanski.dao.Request;
+import net.podolanski.dao.Status;
 import net.podolanski.dao.User;
 import net.podolanski.dao.repository.DepartmentRepository;
 import net.podolanski.dao.repository.DoctypeRepository;
@@ -23,20 +24,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class RequestService {
     
-    @Autowired
-    RequestRepository  requestRepository;
-    @Autowired
-    CurrentStateService currentStateService;
-    
-    @Autowired
-    DoctypeRepository doctypeRepository;
-    @Autowired
-    DepartmentRepository departmentRepository;
-    @Autowired
-    UserRepository userRepository;
+    @Autowired RequestRepository  requestRepository;
+    @Autowired CurrentStateService currentStateService;
+    @Autowired DoctypeRepository doctypeRepository;
+    @Autowired DepartmentRepository departmentRepository;
+    @Autowired UserRepository userRepository;
     
     public List<Request> findAll(User user) {
         return requestRepository.findByUser(user);
+    }
+    
+    public Request findRequestToProceed(User user, Integer id) {
+        return requestRepository.findRequestToProceed(user, id);
+    }
+    
+    public void cancelRequest(Request request) {
+        request.setStatusId(Status.Anulowano);
+        update(request);
+        currentStateService.deleteByRequest(request);
     }
     
     public List<Request> findRequestToProceed(User user) {
@@ -44,8 +49,11 @@ public class RequestService {
     }
     
     public void update(Request request) {
-        //usunac ?
         requestRepository.save(request);
         currentStateService.intializeFlow(request);
-    }        
+    }   
+    
+    public Request findByIdAndUser(Integer id, User user) {
+        return requestRepository.findByRequestIdAndUser(id, user);
+    }
 }

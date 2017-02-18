@@ -6,13 +6,17 @@
 package net.podolanski.controller;
 
 import javax.validation.Valid;
+import net.podolanski.dao.CurrentState;
 import net.podolanski.dao.Department;
 import net.podolanski.dao.Doctype;
 import net.podolanski.dao.Request;
+import net.podolanski.dao.Status;
 import net.podolanski.dao.User;
 import net.podolanski.dao.repository.DepartmentRepository;
 import net.podolanski.dao.repository.DoctypeRepository;
+import net.podolanski.dto.ChangeStateForm;
 import net.podolanski.dto.NewRequestForm;
+import net.podolanski.service.CurrentStateService;
 import net.podolanski.service.RequestService;
 import net.podolanski.service.TransactionService;
 import org.dozer.Mapper;
@@ -39,9 +43,10 @@ public class RequestController {
 
     Logger log = LoggerFactory.getLogger(RequestController.class);
 
-    @Autowired DoctypeRepository doctypeRepository;
-    @Autowired DepartmentRepository departmentRepository;
+    @Autowired DoctypeRepository doctypeRepository;             //repo
+    @Autowired DepartmentRepository departmentRepository;       //repo
     @Autowired RequestService requestService;
+    @Autowired CurrentStateService currentStateService;
     @Autowired TransactionService transactionService;
     @Autowired Mapper mapper;
 
@@ -77,24 +82,58 @@ public class RequestController {
         return "redirect:/home";
     }
 
+    @PostMapping("/{id}/cancel")
+    String cancelRequest(User user, @PathVariable Integer id) {
+        Request request = requestService.findByIdAndUser(id, user);
+        requestService.cancelRequest(request);
+        return "redirect:/{user}/request/{id}";
+    }
+
+    @PostMapping("/proceed/{id}/edit")
+    String proessChangeStateForm(User user, @PathVariable Integer id,
+            ChangeStateForm changeStateForm) {
+
+        Request request = requestService.findByIdAndUser(id, user);
+        request.setFeedback(changeStateForm.getFeedback());
+        CurrentState cs = currentStateService.findByUserAndRequest(user, request);
+        cs.setStatusId(changeStateForm.getStatus());
+        currentStateService.update(cs);
+        return "redirect:/{user}/request/proceed/{id}/";
+        
+    }
+
     @GetMapping("/")
-    ModelAndView getRequestList(@PathVariable User user) {
+    ModelAndView getRequestList(User user) {
         ModelAndView mav = new ModelAndView("request-list");
         mav.addObject("requestList", requestService.findAll(user));
         return mav;
     }
 
     @GetMapping("/proceed")
-    ModelAndView getRequestToProceedList(@PathVariable User user) {
+    ModelAndView getRequestToProceedList(User user) {
         ModelAndView mav = new ModelAndView("proceed-list");
         mav.addObject("proceedList", requestService.findRequestToProceed(user));
         return mav;
     }
 
+    @GetMapping("/proceed/{id}")
+    ModelAndView getRequestToProceedDetails(User user, @PathVariable Integer id) {
+        ModelAndView mav = new ModelAndView("proceed-details");
+        Request request = requestService.findRequestToProceed(user, id);
+        mav.addObject("changeStateForm", new ChangeStateForm());
+        mav.addObject("currentState", currentStateService.findFirst(request));
+        mav.addObject("request", request);
+        mav.addObject("statusList", Status.values());
+        mav.addObject("transactionList",
+                transactionService.getDocumentFlow(request.getDocType()));
+        return mav;
+    }
+
     @GetMapping("/{id}")
-    ModelAndView getRequestDetails(/*@PathVariable*/User user) {
+    ModelAndView getRequestDetails(User user, @PathVariable Integer id) {
         ModelAndView mav = new ModelAndView("request-details");
-        Request request = requestService.findAll(user).get(0);
+        Request request = requestService.findByIdAndUser(id, user);
+        mav.addObject("currentState", currentStateService.findFirst(request));
         mav.addObject("request", request);
         mav.addObject("transactionList",
                 transactionService.getDocumentFlow(request.getDocType()));

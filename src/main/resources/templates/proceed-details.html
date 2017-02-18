@@ -18,18 +18,16 @@
             <div th:replace="fragments/side-bar :: side-bar"></div>
             <div class="row content">
                 <div class="col-sm-9">
-                    <div th:replace="/fragments/request-list :: request-list(${proceedList}, 'Requests to proceed', 'proceed/')"></div>
+                    <div th:replace="/fragments/request-details :: request-details('proceed-form')"></div>
                 </div>
             </div>
         </div>
         <script th:inline="javascript">
             /*<![CDATA[*/
             $(document).ready(function () {
+                reloadStepWizard();
                 activateMenu('#request-menu-button');
                 setActive('#request-menu', 1);
-                $(".clickable-row").click(function () {
-                    window.document.location = $(this).data("href");
-                });
             });
             /*]]>*/
         </script>

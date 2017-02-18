@@ -63,7 +63,6 @@ public class Request implements Serializable {
     @ManyToOne
     private Doctype docType;
     @Column(name = "status_id")
-    //@ManyToOne
     @Enumerated(EnumType.ORDINAL)
     private Status statusId;
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")

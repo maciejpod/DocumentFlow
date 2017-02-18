@@ -1,6 +1,6 @@
 <html>
     <body>
-        <div class="well" th:fragment="request-list(requestList, tableName)">
+        <div class="well" th:fragment="request-list(requestList, tableName, url)">
             <div class="pull-right">
                 <a href="" data-toggle="tooltip" title="You can click on table row to get request details!" id="tip">
                     <span class="glyphicon glyphicon-question-sign" style="font-size: 25px;"></span>
@@ -21,7 +21,7 @@
                     </thead>
                     <tbody>
                         <tr class='clickable-row' th:each="req: ${requestList}"
-                            th:attr="data-href=@{'/' + ${#authentication.name} +'/request/' + ${req.requestId}}">
+                            th:attr="data-href=@{'/' + ${#authentication.name} +'/request/' +${url} + ${req.requestId}}">
                             <td th:text = "${req.requestId}"></td>
                             <td th:text = "${req.docType.name}"></td>
                             <td th:text = "${req.statusId}"></td>

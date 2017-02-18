@@ -5,17 +5,25 @@
  */
 package net.podolanski.dto;
 
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  *
  * @author maciej
  */
 public class UserForm {
+
+    @Email
+    @NotBlank
     private String email;
-    private String username;
+    @Size(min = 3, max = 20)
+    @NotBlank
     private String name;
+    @Size(min = 3, max = 30)
+    @NotBlank
     private String lastname;
-    private String password;
-    private String repeatedPassword;
 
     /**
      * @return the email
@@ -29,20 +37,6 @@ public class UserForm {
      */
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    /**
-     * @return the username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * @param username the username to set
-     */
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     /**
@@ -71,33 +65,5 @@ public class UserForm {
      */
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**
-     * @return the repeatedPassword
-     */
-    public String getRepeatedPassword() {
-        return repeatedPassword;
-    }
-
-    /**
-     * @param repeatedPassword the repeatedPassword to set
-     */
-    public void setRepeatedPassword(String repeatedPassword) {
-        this.repeatedPassword = repeatedPassword;
     }
 }

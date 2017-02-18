@@ -22,8 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/{user}/role/")
 @PreAuthorize("principal.username == #user.username")
 public class RoleController {
-    
-        
+          
     @Autowired
     UserRoleService userRoleService;
     

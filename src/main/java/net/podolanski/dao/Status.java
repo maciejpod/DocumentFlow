@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 
 public enum Status {
-    DUMMY, Zatwierdzono, Odrzucono,
+    Anulowano, Zatwierdzono, Odrzucono,
     Modyfikacja, W_trakcie; 
     
     private String name;

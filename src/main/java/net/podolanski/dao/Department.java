@@ -40,16 +40,8 @@ public class Department implements Serializable {
     private Integer departmentId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
-    private Collection<Userrole> userroleCollection;
-    @OneToMany(mappedBy = "department")
-    private Collection<CurrentState> currentStateCollection;
-    @OneToMany(mappedBy = "department")
-    private Collection<Request> requestCollection;
-    @OneToMany(mappedBy = "fKdepartmentid")
     private Collection<Department> departmentCollection;
     @JoinColumn(name = "\"FK_department_id\"", referencedColumnName = "department_id")
     @ManyToOne
@@ -81,33 +73,6 @@ public class Department implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @XmlTransient
-    public Collection<Userrole> getUserroleCollection() {
-        return userroleCollection;
-    }
-
-    public void setUserroleCollection(Collection<Userrole> userroleCollection) {
-        this.userroleCollection = userroleCollection;
-    }
-
-    @XmlTransient
-    public Collection<CurrentState> getCurrentStateCollection() {
-        return currentStateCollection;
-    }
-
-    public void setCurrentStateCollection(Collection<CurrentState> currentStateCollection) {
-        this.currentStateCollection = currentStateCollection;
-    }
-
-    @XmlTransient
-    public Collection<Request> getRequestCollection() {
-        return requestCollection;
-    }
-
-    public void setRequestCollection(Collection<Request> requestCollection) {
-        this.requestCollection = requestCollection;
     }
 
     @XmlTransient

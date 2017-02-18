@@ -15,6 +15,7 @@ import net.podolanski.dao.Department;
 import net.podolanski.dao.Doctype;
 import net.podolanski.dao.Request;
 import net.podolanski.dao.Transaction;
+import net.podolanski.dao.User;
 import net.podolanski.dao.Userrole;
 import net.podolanski.dao.repository.CurrentStateRepository;
 import net.podolanski.dao.repository.DoctypeRepository;
@@ -41,6 +42,14 @@ public class CurrentStateService {
     @Autowired
     RequestService requestService;
 
+    public void deleteByRequest(Request request) {
+        currentStateRepository.deleteByRequest(request);
+    }
+    
+    public CurrentState findFirst(Request request) {
+        return currentStateRepository.findFirstByRequest(request);
+    }
+    
     public void update(CurrentState currentState) {
         Status status = currentState.getStatusId();
         Request request = currentState.getRequest();
@@ -55,6 +64,10 @@ public class CurrentStateService {
                 onCurrentStateAccepted(currentState);
                 break;
         }
+    }
+    
+    public CurrentState findByUserAndRequest(User user, Request request) {
+        return currentStateRepository.findToProcedByUserAndRequest(user, request);
     }
 
     private void onCurrentStateAccepted(CurrentState currentState) {

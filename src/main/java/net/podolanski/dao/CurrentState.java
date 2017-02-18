@@ -29,8 +29,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CurrentState implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    /*@EmbeddedId
-    protected CurrentStatePK currentStatePK;*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -43,7 +41,6 @@ public class CurrentState implements Serializable {
     @ManyToOne(optional = false)
     private Request request;
     @Column(name = "status_id")
-    //@ManyToOne
     @Enumerated(EnumType.ORDINAL)
     private Status statusId;
     @JoinColumn(name = "transaction_id", referencedColumnName = "transaction_id")

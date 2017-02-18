@@ -5,7 +5,6 @@
  */
 
 function reloadStepWizard() {
-    console.log('dziala');
     var nodes = $('.col-xs-1.bs-wizard-step');
     var cnt = nodes.length;
     var className = 'col-xs-1 bs-wizard-step ';
@@ -16,15 +15,15 @@ function reloadStepWizard() {
         if ($(nodes[i]).first().text().trim() === $('#just-for-testing').text()) {
             $(nodes[i]).removeClass().addClass(className + 'active');
             status = 'disabled';
-        } else {
+        } else if($('#just-for-testing').text() !== "") {
             $(nodes[i]).removeClass().addClass(className + status);
+        } else {
+            $(nodes[i]).removeClass().addClass(className + 'disabled');
         }
     }
 }
 
 function activateMenu(menuId) {
-    console.log("hello darkness my old friend"); 
-    console.log(menuId);
     $(menuId).click();
 }
 
