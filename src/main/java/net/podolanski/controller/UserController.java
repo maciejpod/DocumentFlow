@@ -13,8 +13,6 @@ import net.podolanski.service.UserService;
 import net.podolanski.validator.PasswordValidator;
 import net.podolanski.validator.UserFormValidator;
 import org.dozer.Mapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,8 +32,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/user")
 @PreAuthorize("permitAll()")  
 public class UserController {
-
-    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired UserService userService;
     @Autowired Mapper mapper;

@@ -5,10 +5,7 @@
  */
 package net.podolanski.dao.repository;
 
-import java.util.List;
 import net.podolanski.dao.Department;
-import net.podolanski.dao.User;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**

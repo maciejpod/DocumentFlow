@@ -5,7 +5,6 @@
  */
 package net.podolanski.dao.repository;
 
-import java.util.List;
 import net.podolanski.dao.Doctype;
 import net.podolanski.dao.Transaction;
 import org.springframework.data.jpa.repository.Query;

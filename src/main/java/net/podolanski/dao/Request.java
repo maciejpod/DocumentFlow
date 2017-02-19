@@ -20,8 +20,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -41,15 +39,11 @@ public class Request implements Serializable {
     @Column(name = "request_id")
     private Integer requestId;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "modified_flag")
     private boolean modifiedFlag;
-    @Size(max = 200)
     @Column(name = "feedback")
     private String feedback;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1000)
     @Column(name = "content")
     private String content;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "requestId")

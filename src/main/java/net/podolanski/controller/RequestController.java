@@ -40,11 +40,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/{user}/request/")
 public class RequestController {
-
-    Logger log = LoggerFactory.getLogger(RequestController.class);
-
-    @Autowired DoctypeRepository doctypeRepository;             //repo
-    @Autowired DepartmentRepository departmentRepository;       //repo
+    
+    @Autowired DoctypeRepository doctypeRepository;             
+    @Autowired DepartmentRepository departmentRepository;       
     @Autowired RequestService requestService;
     @Autowired CurrentStateService currentStateService;
     @Autowired TransactionService transactionService;
@@ -92,8 +90,7 @@ public class RequestController {
     @PostMapping("/proceed/{id}/edit")
     String proessChangeStateForm(User user, @PathVariable Integer id,
             ChangeStateForm changeStateForm) {
-
-        Request request = requestService.findByIdAndUser(id, user);
+        Request request = requestService.findRequestToProceed(user, id);
         request.setFeedback(changeStateForm.getFeedback());
         CurrentState cs = currentStateService.findByUserAndRequest(user, request);
         cs.setStatusId(changeStateForm.getStatus());

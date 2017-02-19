@@ -5,10 +5,7 @@
  */
 package net.podolanski.validator;
 
-import net.podolanski.controller.UserController;
 import net.podolanski.dto.PasswordChange;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -24,8 +21,6 @@ public class PasswordValidator implements Validator {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
-    Logger logger = LoggerFactory.getLogger(PasswordValidator.class);
 
     @Override
     public boolean supports(Class<?> type) {

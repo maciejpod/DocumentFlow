@@ -28,8 +28,6 @@ public class UserDetailServiceImplementation implements UserDetailsService {
 
     @Autowired
     UserRoleService userRoleService;
-
-    private static Logger log = LoggerFactory.getLogger(UserDetailServiceImplementation.class);
     
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -37,8 +35,6 @@ public class UserDetailServiceImplementation implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found: " + userName);
         } else {
-            log.info("["+user.getPassword()+"]");
-            log.info("["+user.getUsername()+"]");
             List<String> userRole = userRoleService.userRoleAsString(user);
             return new UserDetailsImplementation(userRole, user);
         }

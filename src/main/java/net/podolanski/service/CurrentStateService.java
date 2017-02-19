@@ -26,21 +26,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CurrentStateService {
-
-    @Autowired
-    DoctypeRepository doctypeRepository;
-
-    @Autowired
-    UserRoleRepository userRoleRepository;
-
-    @Autowired
-    TransactionRepository transactionRepository;
-
-    @Autowired
-    CurrentStateRepository currentStateRepository;
-
-    @Autowired
-    RequestService requestService;
+    
+    @Autowired DoctypeRepository doctypeRepository;
+    @Autowired UserRoleRepository userRoleRepository;
+    @Autowired TransactionRepository transactionRepository;
+    @Autowired CurrentStateRepository currentStateRepository;
+    @Autowired RequestService requestService;
 
     public void deleteByRequest(Request request) {
         currentStateRepository.deleteByRequest(request);
@@ -75,22 +66,23 @@ public class CurrentStateService {
 
         List<CurrentState> currentStateList = currentStateRepository.findByRequest(request);
 
-        if (isCurrentFlowFinished(currentStateList)) {
-
-            Set<CurrentState> currentStateUpdateList = findNextStates(currentStateList);
-
+        while (isCurrentFlowFinished(currentStateList) &&
+                !request.getStatusId().equals(Status.Zatwierdzono)) {
+            
+            Set<CurrentState> currentStateUpdateList = findNextStates(currentStateList);           
             if (currentStateUpdateList.isEmpty()) {
                 request.setStatusId(Status.Zatwierdzono);
                 requestService.update(request);
             }
             currentStateRepository.deleteByRequest(request);
             currentStateRepository.save(currentStateUpdateList);
+            currentStateList = currentStateRepository.findByRequest(request);
+            currentStateUpdateList.clear();
         }
     }
 
     private Set<CurrentState> findNextStates(List<CurrentState> currentStateList) {
         Set<CurrentState> currentStateUpdateList = new HashSet<>();
-
         currentStateList.forEach((cs) -> {
             Request request = cs.getRequest();
             Transaction transaction = transactionRepository
@@ -106,6 +98,7 @@ public class CurrentStateService {
 
                 CurrentState newState = new CurrentState(request, transaction, newDepartment);
                 acceptStatusForOwnerRequest(userRole, newState);
+              
                 currentStateUpdateList.add(newState);
             }
         });
@@ -137,7 +130,6 @@ public class CurrentStateService {
         }
     }
 
-    // wyjazd do transaction service
     private boolean isLastStep(Transaction transaction, Doctype doctype) {
         return transactionRepository.findFirstTransaction(doctype.getDoctypeId()).equals(transaction);
     }
@@ -146,6 +138,6 @@ public class CurrentStateService {
         List<CurrentState> acceptedCurrenStates = currentStateList.stream()
                 .filter((cs) -> cs.getStatusId().equals(Status.Zatwierdzono))
                 .collect(Collectors.toList());
-        return currentStateList.size() - 1 == acceptedCurrenStates.size();
+        return currentStateList.size() == acceptedCurrenStates.size();
     }
 }

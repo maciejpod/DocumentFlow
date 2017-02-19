@@ -19,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -42,6 +41,7 @@ public class Department implements Serializable {
     @NotNull
     @Column(name = "name")
     private String name;
+    @OneToMany(mappedBy = "fKdepartmentid")
     private Collection<Department> departmentCollection;
     @JoinColumn(name = "\"FK_department_id\"", referencedColumnName = "department_id")
     @ManyToOne

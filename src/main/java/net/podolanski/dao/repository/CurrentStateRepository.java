@@ -7,12 +7,9 @@ package net.podolanski.dao.repository;
 
 import net.podolanski.dao.CurrentState;
 import net.podolanski.dao.Request;
-
-import java.io.Serializable;
 import java.util.List;
 import javax.transaction.Transactional;
 import net.podolanski.dao.User;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

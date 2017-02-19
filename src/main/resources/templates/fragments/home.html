@@ -4,7 +4,7 @@
                 <div class="col-sm-6">
                     <div class="panel panel-default">
                         <div class="panel-body request-panel">  
-                            <h3>Zgłoszenia do zatwierdzenia</h3> 
+                            <h3>Your requests</h3> 
                             <br/>
                             <div class="table-responsive">
                                 <table class="table table-striped table-short table-hover">
@@ -16,7 +16,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="request: ${requestList}">
+                                        <tr class="clickable-row" th:each="request: ${requestList}"
+                                            th:attr="data-href=@{'/' + ${#authentication.name} +'/request/' + ${request.requestId}}">
                                             <td th:text="${request.requestId}"></td>
                                             <td th:text="${request.docType.name}"></td>
                                             <td th:text="${request.department.name}"></td>
@@ -25,13 +26,13 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="panel-footer request-panel-footer">Panel Footer</div>
+                        <div class="panel-footer request-panel-footer">More</div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="panel panel-default">
                         <div class="panel-body request-panel">  
-                            <h3>Zgłoszenia do zatwierdzenia</h3> 
+                            <h3>Requests to proceed</h3> 
                             <br/>
                             <div class="table-responsive">
                                 <table class="table table-striped table-short table-hover">
@@ -43,7 +44,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="request: ${proceedList}">
+                                        <tr class="clickable-row" th:each="request: ${proceedList}"
+                                            th:attr="data-href=@{'/' + ${#authentication.name} +'/request/proceed/' + ${request.requestId}}">
                                             <td th:text="${request.requestId}"></td>
                                             <td th:text="${request.docType.name}"></td>
                                             <td th:text="${request.department.name}"></td>
@@ -52,7 +54,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="panel-footer request-panel-footer">Panel Footer</div>
+                        <div class="panel-footer request-panel-footer">More</div>
                     </div>
                 </div>
             </div>

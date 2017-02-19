@@ -5,14 +5,14 @@
             <nav class="navbar navbar-default black visible-xs" >
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" th:href="@{'/home'}">WebSiteName</a>
+                        <a class="navbar-brand" th:href="@{'/home'}">Document flow</a>
                     </div>
                 </div>
             </nav>
             <nav class="navbar navbar-default hidden-xs">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" th:href="@{'/home'}"    >WebSiteName</a>
+                        <a class="navbar-brand" th:href="@{'/home'}"    >Document flow</a>
                     </div>
                 </div>
             </nav>
@@ -26,11 +26,20 @@
                         </button>
                     </div>
                     <div class="collapse navbar-collapse" id="myNavbar">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="#" data-toggle="collapse" data-target="#demo">Profil</a></li>
-                            <ul class="nav nav-list collapse" id="demo">
-                                <li><a href="#">Dane</a></li>
-                                <li><a href="#">Zatrudnienie</a></li>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="active"><a href="#" data-toggle="collapse" data-target="#profile-menu">Profile</a></li>
+                            <ul class="nav nav-pills nav-stacked collapse center-block" style="margin-top: 10px; width:80%;">
+                                <li><a th:href="@{'/user/' + ${#authentication.name}}">Details</a></li>
+                                <li><a th:href="@{'/' + ${#authentication.name} +'/role/'}">Employment</a></li>
+                            </ul>
+                        </ul>
+                        <br/>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="active"><a href="#" data-toggle="collapse" data-target="#request-menu">Documents</a></li>
+                            <ul class="nav nav-pills nav-stacked collapse center-block" style="margin-top: 10px; width:80%;">
+                                <li><a th:href="@{'/' + ${#authentication.name} +'/request/'}">Your requests</a></li>
+                                <li><a th:href="@{'/' + ${#authentication.name} +'/request/proceed'}">To proceed</a></li>
+                                <li><a th:href="@{'/' + ${#authentication.name} +'/request/new'}">New request</a></li>
                             </ul>
                         </ul>
                     </div>

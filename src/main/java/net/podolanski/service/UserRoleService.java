@@ -13,7 +13,6 @@ import net.podolanski.dao.Department;
 import net.podolanski.dao.Role;
 import net.podolanski.dao.User;
 import net.podolanski.dao.Userrole;
-import net.podolanski.dao.repository.DepartmentRepository;
 import net.podolanski.dao.repository.RoleRepository;
 import net.podolanski.dao.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

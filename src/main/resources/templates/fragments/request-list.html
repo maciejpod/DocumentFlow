@@ -20,7 +20,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class='clickable-row' th:each="req: ${requestList}"
+                        <tr class="clickable-row" th:each="req: ${requestList}"
                             th:attr="data-href=@{'/' + ${#authentication.name} +'/request/' +${url} + ${req.requestId}}">
                             <td th:text = "${req.requestId}"></td>
                             <td th:text = "${req.docType.name}"></td>
@@ -29,8 +29,6 @@
                             <td th:text = "${req.modifiedFlag}"></td>
                         </tr>
                     </tbody>
-
-                    <!-- IF NOT OWNER THEN FORM -->
                 </table>
             </div>
         </div> 

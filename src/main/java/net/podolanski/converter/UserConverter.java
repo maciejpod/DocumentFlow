@@ -6,7 +6,6 @@
 package net.podolanski.converter;
 
 import net.podolanski.dao.User;
-import net.podolanski.dao.repository.UserRepository;
 import net.podolanski.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;

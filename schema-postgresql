@@ -1,0 +1,273 @@
+CREATE TABLE "T_USER"(
+ "user_id" Serial NOT NULL,
+ "name" Varchar
+        CHECK ("name" ~'^[a-zA-Z]*$'),
+ "email" Varchar NOT NULL
+        CHECK ("email" ~'^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
+ "lastname" Varchar
+        CHECK ("lastname" ~'^[a-zA-Z]*$'),
+ "password" Character varying(100) NOT NULL,
+ "username" Varchar NOT NULL
+        CHECK ("username" ~ '^[a-zA-Z0-9_.-]{4,}$')
+)
+;
+
+-- Add keys for table T_USER
+
+ALTER TABLE "T_USER" ADD CONSTRAINT "pk_T_user" PRIMARY KEY ("user_id")
+;
+
+ALTER TABLE "T_USER" ADD CONSTRAINT "Email" UNIQUE ("email")
+;
+
+ALTER TABLE "T_USER" ADD CONSTRAINT "Username" UNIQUE ("username")
+;
+
+-- Table T_STATUS
+
+CREATE TABLE "T_STATUS"(
+ "status_id" Serial NOT NULL,
+ "name" Character varying(20) NOT NULL
+)
+;
+
+-- Add keys for table T_STATUS
+
+ALTER TABLE "T_STATUS" ADD CONSTRAINT "pk_T_status" PRIMARY KEY ("status_id")
+;
+
+-- Table T_ROLE
+
+CREATE TABLE "T_ROLE"(
+ "role_id" Serial NOT NULL,
+ "name" Character varying(20) NOT NULL,
+ "priority" Integer
+)
+;
+
+-- Add keys for table T_ROLE
+
+ALTER TABLE "T_ROLE" ADD CONSTRAINT "pk_T_role" PRIMARY KEY ("role_id")
+;
+
+-- Table T_DEPARTMENT
+
+CREATE TABLE "T_DEPARTMENT"(
+ "department_id" Serial NOT NULL,
+ "FK_department_id" Integer,
+ "name" Character varying(20) NOT NULL
+)
+;
+
+-- Create indexes for table T_DEPARTMENT
+
+CREATE INDEX "department_parent_idx" ON "T_DEPARTMENT" ("FK_department_id")
+;
+
+-- Add keys for table T_DEPARTMENT
+
+ALTER TABLE "T_DEPARTMENT" ADD CONSTRAINT "pk_T_department" PRIMARY KEY ("department_id")
+;
+
+-- Table T_USERROLE
+
+CREATE TABLE "T_USERROLE"(
+ "user_id" Integer NOT NULL,
+ "role_id" Integer NOT NULL,
+ "department_id" Integer NOT NULL
+)
+;
+
+-- Add keys for table T_USERROLE
+
+ALTER TABLE "T_USERROLE" ADD CONSTRAINT "pk_T_userRole" PRIMARY KEY ("user_id","role_id","department_id")
+;
+
+-- Table T_TRANSACTION
+
+CREATE TABLE "T_TRANSACTION"(
+ "transaction_id" Serial NOT NULL,
+ "name" Character varying(20) NOT NULL,
+ "role_id" Integer
+)
+;
+
+-- Create indexes for table T_TRANSACTION
+
+CREATE INDEX "role_index" ON "T_TRANSACTION" ("role_id")
+;
+
+-- Add keys for table T_TRANSACTION
+
+ALTER TABLE "T_TRANSACTION" ADD CONSTRAINT "pk_T_transaction" PRIMARY KEY ("transaction_id")
+;
+
+-- Table T_DOCTYPE
+
+CREATE TABLE "T_DOCTYPE"(
+ "doctype_id" Serial NOT NULL,
+ "name" Character varying(20) NOT NULL,
+ "transaction_id" Integer
+)
+;
+
+-- Create indexes for table T_DOCTYPE
+
+CREATE INDEX "begin_transaction_idx" ON "T_DOCTYPE" ("transaction_id")
+;
+
+-- Add keys for table T_DOCTYPE
+
+ALTER TABLE "T_DOCTYPE" ADD CONSTRAINT "pk_T_doctype" PRIMARY KEY ("doctype_id")
+;
+
+-- Table T_CONNECTION
+
+CREATE TABLE "T_CONNECTION"(
+ "transaction_id" Integer NOT NULL,
+ "ref_transaction_id" Integer NOT NULL,
+ "doctype_id" Integer NOT NULL
+)
+;
+
+-- Add keys for table T_CONNECTION
+
+ALTER TABLE "T_CONNECTION" ADD CONSTRAINT "pk_T_connection" PRIMARY KEY ("transaction_id","ref_transaction_id","doctype_id")
+;
+
+-- Table T_REQUEST
+
+CREATE TABLE "T_REQUEST"(
+ "request_id" Serial NOT NULL,
+ "user_id" Integer,
+ "doctype_id" Integer,
+ "status_id" Integer,
+ "department_id" Integer,
+ "modified_flag" Boolean DEFAULT FALSE NOT NULL,
+ "feedback" Character varying(200),
+ "content" Character varying(1000) NOT NULL
+)
+;
+
+-- Create indexes for table T_REQUEST
+
+CREATE INDEX "user_idx" ON "T_REQUEST" ("user_id")
+;
+
+CREATE INDEX "status_idx" ON "T_REQUEST" ("status_id")
+;
+
+CREATE INDEX "doctype_idx" ON "T_REQUEST" ("doctype_id")
+;
+
+CREATE INDEX "department_idx" ON "T_REQUEST" ("department_id")
+;
+
+-- Add keys for table T_REQUEST
+
+ALTER TABLE "T_REQUEST" ADD CONSTRAINT "pk_T_request" PRIMARY KEY ("request_id")
+;
+
+-- Table T_CURRENT_STATE
+
+CREATE TABLE "T_CURRENT_STATE"(
+ "currentstate_id" Serial NOT NULL,
+ "request_id" Integer NOT NULL,
+ "transaction_id" Integer NOT NULL,
+ "status_id" Integer,
+ "department_id" Integer
+)
+;
+
+-- Create indexes for table T_CURRENT_STATE
+
+CREATE INDEX "status1_idx" ON "T_CURRENT_STATE" ("status_id")
+;
+
+CREATE INDEX "department1_idx" ON "T_CURRENT_STATE" ("department_id")
+;
+
+-- Add keys for table T_CURRENT_STATE
+
+ALTER TABLE "T_CURRENT_STATE" ADD CONSTRAINT "pkt_T_current_state" PRIMARY KEY ("currentstate_id","request_id","transaction_id")
+;
+
+-- Table T_HISTORY
+
+CREATE TABLE "T_HISTORY"(
+ "history_id" Serial NOT NULL,
+ "request_id" Integer NOT NULL,
+ "department_name" Character(20) NOT NULL,
+ "transaction_name" Character(20) NOT NULL,
+ "status_name" Character(20) NOT NULL,
+ "user" Character(50) NOT NULL,
+ "role_name" Character(20) NOT NULL
+)
+;
+
+-- Create indexes for table T_HISTORY
+
+CREATE INDEX "request_idx" ON "T_HISTORY" ("request_id")
+;
+
+-- Add keys for table T_HISTORY
+
+ALTER TABLE "T_HISTORY" ADD CONSTRAINT "Key4" PRIMARY KEY ("history_id")
+;
+
+
+-- Create relationships section ------------------------------------------------- 
+
+ALTER TABLE "T_DEPARTMENT" ADD CONSTRAINT "subordinate_to" FOREIGN KEY ("FK_department_id") REFERENCES "T_DEPARTMENT" ("department_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_USERROLE" ADD CONSTRAINT "work_for" FOREIGN KEY ("user_id") REFERENCES "T_USER" ("user_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_USERROLE" ADD CONSTRAINT "has" FOREIGN KEY ("role_id") REFERENCES "T_ROLE" ("role_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_USERROLE" ADD CONSTRAINT "hire" FOREIGN KEY ("department_id") REFERENCES "T_DEPARTMENT" ("department_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_TRANSACTION" ADD CONSTRAINT "administrate" FOREIGN KEY ("role_id") REFERENCES "T_ROLE" ("role_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_DOCTYPE" ADD CONSTRAINT "begin" FOREIGN KEY ("transaction_id") REFERENCES "T_TRANSACTION" ("transaction_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_CONNECTION" ADD CONSTRAINT "belong_to" FOREIGN KEY ("transaction_id") REFERENCES "T_TRANSACTION" ("transaction_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_CONNECTION" ADD CONSTRAINT "fallowed_by" FOREIGN KEY ("ref_transaction_id") REFERENCES "T_TRANSACTION" ("transaction_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_CONNECTION" ADD CONSTRAINT "describe" FOREIGN KEY ("doctype_id") REFERENCES "T_DOCTYPE" ("doctype_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_REQUEST" ADD CONSTRAINT "report" FOREIGN KEY ("user_id") REFERENCES "T_USER" ("user_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_REQUEST" ADD CONSTRAINT "r" FOREIGN KEY ("status_id") REFERENCES "T_STATUS" ("status_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_REQUEST" ADD CONSTRAINT "assigned_to" FOREIGN KEY ("doctype_id") REFERENCES "T_DOCTYPE" ("doctype_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_REQUEST" ADD CONSTRAINT "recive" FOREIGN KEY ("department_id") REFERENCES "T_DEPARTMENT" ("department_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_CURRENT_STATE" ADD CONSTRAINT "has_state" FOREIGN KEY ("request_id") REFERENCES "T_REQUEST" ("request_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_CURRENT_STATE" ADD CONSTRAINT "perforned" FOREIGN KEY ("transaction_id") REFERENCES "T_TRANSACTION" ("transaction_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_CURRENT_STATE" ADD CONSTRAINT "r1" FOREIGN KEY ("status_id") REFERENCES "T_STATUS" ("status_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_CURRENT_STATE" ADD CONSTRAINT "process" FOREIGN KEY ("department_id") REFERENCES "T_DEPARTMENT" ("department_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
+
+ALTER TABLE "T_HISTORY" ADD CONSTRAINT "is_stored" FOREIGN KEY ("request_id") REFERENCES "T_REQUEST" ("request_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+;
