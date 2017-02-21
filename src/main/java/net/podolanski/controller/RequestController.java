@@ -95,7 +95,7 @@ public class RequestController {
         CurrentState cs = currentStateService.findByUserAndRequest(user, request);
         cs.setStatusId(changeStateForm.getStatus());
         currentStateService.update(cs);
-        return "redirect:/{user}/request/proceed/{id}/";
+        return "redirect:/{user}/request/proceed/";
         
     }
 
