@@ -11,8 +11,8 @@ package net.podolanski.dao;
  */
 
 public enum Status {
-    Anulowano, Zatwierdzono, Odrzucono,
-    Modyfikacja, W_trakcie; 
+    CANCELLED, ACCEPTED, DENIED,
+    MODIFY, PROCESSING;
     
     private String name;
     

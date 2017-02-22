@@ -39,7 +39,7 @@ public class RequestService {
     }
     
     public void cancelRequest(Request request) {
-        request.setStatusId(Status.Anulowano);
+        request.setStatusId(Status.CANCELLED);
         update(request);
         currentStateService.deleteByRequest(request);
     }
@@ -50,7 +50,8 @@ public class RequestService {
     
     public void update(Request request) {
         requestRepository.save(request);
-        currentStateService.intializeFlow(request);
+        if(request.getStatusId().equals(Status.PROCESSING))
+            currentStateService.intializeFlow(request);
     }   
     
     public Request findByIdAndUser(Integer id, User user) {
