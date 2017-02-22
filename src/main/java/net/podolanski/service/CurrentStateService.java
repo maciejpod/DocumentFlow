@@ -21,12 +21,16 @@ import net.podolanski.dao.repository.CurrentStateRepository;
 import net.podolanski.dao.repository.DoctypeRepository;
 import net.podolanski.dao.repository.TransactionRepository;
 import net.podolanski.dao.repository.UserRoleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CurrentStateService {
-    
+
+    Logger lg = LoggerFactory.getLogger(CurrentStateService.class);
+
     @Autowired DoctypeRepository doctypeRepository;
     @Autowired UserRoleRepository userRoleRepository;
     @Autowired TransactionRepository transactionRepository;
@@ -47,6 +51,8 @@ public class CurrentStateService {
         switch (status) {
             case DENIED:
             case MODIFY:
+                lg.info("->>>" + request.getRequestId());
+                lg.info("->>>" + request.getStatusId());
                 currentStateRepository.deleteByRequest(request);
                 request.setStatusId(status);
                 requestService.update(request);

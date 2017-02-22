@@ -6,7 +6,7 @@ CREATE TABLE t_user(
         CHECK (email ~'^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
  lastname Varchar
         CHECK (lastname ~'^[a-zA-Z]*$'),
- password Character varying(100) NOT NULL,
+ password Varchar(100) NOT NULL,
  username Varchar NOT NULL
         CHECK (username ~ '^[a-zA-Z0-9_.-]{4,}$')
 )
@@ -27,7 +27,7 @@ ALTER TABLE t_user ADD CONSTRAINT username UNIQUE (username)
 
 CREATE TABLE t_status(
  status_id int auto_increment NOT NULL,
- name Character varying(20) NOT NULL
+ name Varchar(20) NOT NULL
 )
 ;
 
@@ -40,7 +40,7 @@ ALTER TABLE t_status ADD CONSTRAINT pk_t_status PRIMARY KEY (status_id)
 
 CREATE TABLE t_role(
  role_id int auto_increment NOT NULL,
- name Character varying(20) NOT NULL,
+ name Varchar(20) NOT NULL,
  priority Integer
 )
 ;
@@ -55,7 +55,7 @@ ALTER TABLE t_role ADD CONSTRAINT pk_t_role PRIMARY KEY (role_id)
 CREATE TABLE t_department(
  department_id int auto_increment NOT NULL,
  fk_department_id Integer,
- name Character varying(20) NOT NULL
+ name Varchar(20) NOT NULL
 )
 ;
 
@@ -87,7 +87,7 @@ ALTER TABLE t_userrole ADD CONSTRAINT pk_t_userrole PRIMARY KEY (user_id,role_id
 
 CREATE TABLE t_transaction(
  transaction_id int auto_increment NOT NULL,
- name Character varying(20) NOT NULL,
+ name Varchar(20) NOT NULL,
  role_id Integer
 )
 ;
@@ -106,7 +106,7 @@ ALTER TABLE t_transaction ADD CONSTRAINT pk_t_transaction PRIMARY KEY (transacti
 
 CREATE TABLE t_doctype(
  doctype_id int auto_increment NOT NULL,
- name Character varying(20) NOT NULL,
+ name Varchar(20) NOT NULL,
  transaction_id Integer
 )
 ;
@@ -144,8 +144,8 @@ CREATE TABLE t_request(
  status_id Integer,
  department_id Integer,
  modified_flag Boolean DEFAULT FALSE NOT NULL,
- feedback Character varying(200),
- content Character varying(1000) NOT NULL
+ feedback Varchar(200),
+ content Varchar(1000) NOT NULL
 )
 ;
 
@@ -197,11 +197,11 @@ ALTER TABLE t_current_state ADD CONSTRAINT pkt_T_current_state PRIMARY KEY (curr
 CREATE TABLE t_history(
  history_id int auto_increment NOT NULL,
  request_id Integer NOT NULL,
- department_name Character varying(20) NOT NULL,
- transaction_name Character varying(20) NOT NULL,
- status_name Character varying(20) NOT NULL,
- user Character varying(50) NOT NULL,
- role_name Character varying(20) NOT NULL
+ department_name Varchar(20) NOT NULL,
+ transaction_name Varchar(20) NOT NULL,
+ status_name Varchar(20) NOT NULL,
+ user Varchar(50) NOT NULL,
+ role_name Varchar(20) NOT NULL
 )
 ;
 
