@@ -5,6 +5,7 @@
  */
 package net.podolanski.controller;
 
+import java.util.Optional;
 import javax.validation.Valid;
 import net.podolanski.dao.CurrentState;
 import net.podolanski.dao.Department;
@@ -116,13 +117,16 @@ public class RequestController {
     @GetMapping("/proceed/{id}")
     ModelAndView getRequestToProceedDetails(User user, @PathVariable Integer id) {
         ModelAndView mav = new ModelAndView("proceed-details");
-        Request request = requestService.findRequestToProceed(user, id);
-        mav.addObject("changeStateForm", new ChangeStateForm());
-        mav.addObject("currentState", currentStateService.findFirst(request));
-        mav.addObject("request", request);
-        mav.addObject("statusList", Status.values());
-        mav.addObject("transactionList",
-                transactionService.getDocumentFlow(request.getDocType()));
+        Optional<Request> request =
+                Optional.ofNullable(requestService.findRequestToProceed(user, id));
+        request.ifPresent((req) -> {
+            mav.addObject("changeStateForm", new ChangeStateForm());
+            mav.addObject("currentState", currentStateService.findFirst(req));
+            mav.addObject("request", req);
+            mav.addObject("statusList", Status.values());
+            mav.addObject("transactionList",
+                    transactionService.getDocumentFlow(req.getDocType()));
+        });
         return mav;
     }
 
