@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author maciej
  */
 @Entity
-@Table(name = "\"T_CONNECTION\"")
+@Table(name = "t_connection")
 @XmlRootElement
 public class Connection implements Serializable {
 

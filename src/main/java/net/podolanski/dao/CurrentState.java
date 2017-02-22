@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author maciej
  */
 @Entity
-@Table(name = "\"T_CURRENT_STATE\"")
+@Table(name = "t_current_state")
 @XmlRootElement
 public class CurrentState implements Serializable {
 
@@ -51,7 +51,7 @@ public class CurrentState implements Serializable {
     }
     
     public CurrentState(Request request, Transaction transaction, Department department) {
-        this.statusId = Status.W_trakcie;
+        this.statusId = Status.PROCESSING;
         this.request = request;
         this.transaction = transaction;
         this.department = department;

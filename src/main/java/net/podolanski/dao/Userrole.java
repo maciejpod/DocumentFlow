@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author maciej
  */
 @Entity
-@Table(name = "\"T_USERROLE\"")
+@Table(name = "t_userrole")
 @XmlRootElement
 public class Userrole implements Serializable {
 

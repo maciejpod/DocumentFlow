@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author maciej
  */
 @Entity
-@Table(name = "\"T_DOCTYPE\"")
+@Table(name = "t_doctype")
 @XmlRootElement
 public class Doctype implements Serializable {
 

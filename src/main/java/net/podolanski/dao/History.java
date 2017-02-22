@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author maciej
  */
 @Entity
-@Table(name = "\"T_HISTORY\"")
+@Table(name = "t_history")
 @XmlRootElement
 public class History implements Serializable {
 

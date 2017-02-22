@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author maciej
  */
 @Entity
-@Table(name = "\"T_DEPARTMENT\"")
+@Table(name = "t_department")
 @XmlRootElement
 public class Department implements Serializable {
 
@@ -43,7 +43,7 @@ public class Department implements Serializable {
     private String name;
     @OneToMany(mappedBy = "fKdepartmentid")
     private Collection<Department> departmentCollection;
-    @JoinColumn(name = "\"FK_department_id\"", referencedColumnName = "department_id")
+    @JoinColumn(name = "fk_department_id", referencedColumnName = "department_id")
     @ManyToOne
     private Department fKdepartmentid;
 

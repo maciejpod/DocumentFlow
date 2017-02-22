@@ -39,7 +39,7 @@ public class RequestService {
     }
     
     public void cancelRequest(Request request) {
-        request.setStatusId(Status.Anulowano);
+        request.setStatusId(Status.CANCELLED);
         update(request);
         currentStateService.deleteByRequest(request);
     }

@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author maciej
  */
 @Entity
-@Table(name = "\"T_REQUEST\"")
+@Table(name = "t_request")
 @XmlRootElement
 public class Request implements Serializable {
 
@@ -65,7 +65,7 @@ public class Request implements Serializable {
 
     public Request() {
         this.modifiedFlag = false;
-        this.statusId = Status.W_trakcie;
+        this.statusId = Status.PROCESSING;
     }
 
     public Request(Integer requestId) {
