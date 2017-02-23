@@ -28,6 +28,5 @@ public interface CurrentStateRepository extends CrudRepository<CurrentState, Int
     Long deleteByRequest(Request request);
 
     List<CurrentState> findByRequest(Request request);
-    
     CurrentState findFirstByRequest(Request request);
 }

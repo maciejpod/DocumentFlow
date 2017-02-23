@@ -65,7 +65,7 @@ public class Request implements Serializable {
 
     public Request() {
         this.modifiedFlag = false;
-        this.statusId = Status.W_trakcie;
+        this.statusId = Status.PROCESSING;
     }
 
     public Request(Integer requestId) {

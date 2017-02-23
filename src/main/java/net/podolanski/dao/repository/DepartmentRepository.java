@@ -13,7 +13,5 @@ import org.springframework.data.repository.CrudRepository;
  * @author maciej
  */
 public interface DepartmentRepository extends CrudRepository<Department, Integer>{
-    
     Department findByName(String name);
-
 }

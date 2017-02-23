@@ -23,8 +23,10 @@ import net.podolanski.dao.repository.TransactionRepository;
 import net.podolanski.dao.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class CurrentStateService {
     
     @Autowired DoctypeRepository doctypeRepository;
@@ -45,13 +47,13 @@ public class CurrentStateService {
         Status status = currentState.getStatusId();
         Request request = currentState.getRequest();
         switch (status) {
-            case Odrzucono:
-            case Modyfikacja:
+            case DENIED:
+            case MODIFY:
                 currentStateRepository.deleteByRequest(request);
                 request.setStatusId(status);
                 requestService.update(request);
                 break;
-            case Zatwierdzono:
+            case ACCEPTED:
                 onCurrentStateAccepted(currentState);
                 break;
         }
@@ -67,11 +69,11 @@ public class CurrentStateService {
         List<CurrentState> currentStateList = currentStateRepository.findByRequest(request);
 
         while (isCurrentFlowFinished(currentStateList) &&
-                !request.getStatusId().equals(Status.Zatwierdzono)) {
+                !request.getStatusId().equals(Status.ACCEPTED)) {
             
             Set<CurrentState> currentStateUpdateList = findNextStates(currentStateList);           
             if (currentStateUpdateList.isEmpty()) {
-                request.setStatusId(Status.Zatwierdzono);
+                request.setStatusId(Status.ACCEPTED);
                 requestService.update(request);
             }
             currentStateRepository.deleteByRequest(request);
@@ -108,7 +110,7 @@ public class CurrentStateService {
     private boolean acceptStatusForOwnerRequest(List<Userrole> userRoleList, CurrentState currentState) {
         for (Userrole ur : userRoleList) {
             if (ur.getUser().equals(currentState.getRequest().getUser())) {
-                currentState.setStatusId(Status.Zatwierdzono);
+                currentState.setStatusId(Status.ACCEPTED);
                 return true;
             }
         }
@@ -136,7 +138,7 @@ public class CurrentStateService {
 
     private boolean isCurrentFlowFinished(List<CurrentState> currentStateList) {
         List<CurrentState> acceptedCurrenStates = currentStateList.stream()
-                .filter((cs) -> cs.getStatusId().equals(Status.Zatwierdzono))
+                .filter((cs) -> cs.getStatusId().equals(Status.ACCEPTED))
                 .collect(Collectors.toList());
         return currentStateList.size() == acceptedCurrenStates.size();
     }

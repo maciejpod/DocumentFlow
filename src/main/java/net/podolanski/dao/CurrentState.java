@@ -51,7 +51,7 @@ public class CurrentState implements Serializable {
     }
     
     public CurrentState(Request request, Transaction transaction, Department department) {
-        this.statusId = Status.W_trakcie;
+        this.statusId = Status.PROCESSING;
         this.request = request;
         this.transaction = transaction;
         this.department = department;

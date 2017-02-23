@@ -25,11 +25,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserRoleService {
 
-    @Autowired
-    UserRoleRepository userRoleRepository;
+    @Autowired UserRoleRepository userRoleRepository;
 
-    @Autowired
-    RoleRepository roleRepository;
+    @Autowired RoleRepository roleRepository;
 
     List<String> userRoleAsString(User user) {
         List<String> stringResult = userRoleRepository
