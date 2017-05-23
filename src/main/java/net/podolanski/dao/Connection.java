@@ -38,6 +38,12 @@ public class Connection implements Serializable {
     public Connection() {
     }
 
+    public Connection(Doctype doctype, Transaction transaction, Transaction transaction1) {
+        this.doctype = doctype;
+        this.transaction = transaction;
+        this.transaction1 = transaction1;
+    }
+
     public Connection(ConnectionPK connectionPK) {
         this.connectionPK = connectionPK;
     }

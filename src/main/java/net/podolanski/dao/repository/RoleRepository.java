@@ -20,5 +20,6 @@ public interface RoleRepository extends CrudRepository<Role, Integer>{
     
     @Query("SELECT ur.role FROM  Userrole ur WHERE ur.user = ?1 and ur.department = ?2")
     List<Role> findRoleByDepartment(User user, Department department);
-    
+
+    Role findRoleByName(String name);
 }

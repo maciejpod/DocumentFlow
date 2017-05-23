@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div class="well" th:fragment="document-path">
+    <h3>New request</h3>
+    <br/>
+    <form class="form-horizontal" role="form" method="post" th:action="@{/path/new}"
+          th:object="${documentPathForm}">
+        <div class="form-group">
+            <div class="row">
+                <div class="alert alert-danger col-lg-8 col-md-offset-2" th:if="${#fields.hasErrors('documentName')}" th:errors="*{documentName}">
+                </div>
+            </div>
+            <label class="col-lg-2 control-label">Document name:</label>
+            <div class="col-lg-8">
+                <input type="text" class="form-control" th:field="*{documentName}"/>
+            </div>
+        </div>
+        <span id ="listForm">
+            <div class="row">
+                <div class="alert alert-danger col-lg-8 col-md-offset-2" th:if="${#fields.hasErrors('pathElementList')}" th:errors="*{pathElementList}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Privileges</label>
+                <div class="col-lg-4">
+                  <input type="text" class="form-control" th:field="*{pathElementList[0].transactionName}"/>
+                </div>
+                <div class="col-lg-4">
+                    <select class="form-control" id="roleName" th:field="*{pathElementList[0].assingnedRole}" th:remove="all-but-first">
+                        <option th:each="role : ${roleList}" th:value = "${role.name}"
+                                    th:text="${role.name}">Role name
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </span>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label"></label>
+            <div class="col-md-8">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </form>
+    <button id="addButton">Add</button>
+    <button id="removeButton">Remove</button>
+</div>
+</body>
+</html>

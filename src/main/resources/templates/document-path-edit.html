@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Document Flow</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/test.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div th:replace="fragments/nav-bar-xs :: xs-nav"></div>
+<div class="container-fluid">
+    <div th:replace="fragments/side-bar :: side-bar"></div>
+    <div class="row content">
+        <div class="col-sm-9">
+            <div th:replace="/fragments/path-edit-form :: path-edit-form"></div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function () {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+
+    var i = 3;
+    $('#addButton').click(function () {
+        var appendElement = '<input type="text" class="form-control" id="pathElementList' + i + '.transactionName" name="pathElementList[' + i + '].transactionName" value="" />';
+        var appendSelectOptions = '<select class="form-control" id="roleName' + i + '" name="pathElementList[' + i +'].assingnedRole">';
+        var prefix = '<div class="form-group" id="inputForm' +i +'">' +
+            '<label class="col-lg-2 control-label"></label>' +
+            '<div class="col-lg-4">';
+        var sufix = '</select></div></div>';
+        var x = $( "#roleName option" ).clone();
+        $('#listForm').append(prefix + appendElement + '</div><div class="col-lg-4">' + appendSelectOptions + sufix);
+        $('#roleName' + i).append(x);
+        i = i + 1;
+    });
+
+    $('#removeButton').click(function () {
+        if(i === 1) return;
+        $('#inputForm' + (i - 1)).remove();
+        i = i - 1;
+    })
+    /*]]>*/
+</script>
+</body>
+</html>
