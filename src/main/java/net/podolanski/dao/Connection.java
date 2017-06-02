@@ -39,6 +39,10 @@ public class Connection implements Serializable {
     }
 
     public Connection(Doctype doctype, Transaction transaction, Transaction transaction1) {
+        connectionPK = new ConnectionPK();
+        connectionPK.setDoctypeId(doctype.getDoctypeId());
+        connectionPK.setTransactionId(transaction.getTransactionId());
+        connectionPK.setRefTransactionId(transaction1.getTransactionId());
         this.doctype = doctype;
         this.transaction = transaction;
         this.transaction1 = transaction1;

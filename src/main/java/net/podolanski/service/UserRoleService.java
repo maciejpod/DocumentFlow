@@ -49,6 +49,9 @@ public class UserRoleService {
                             return roleRepository.findRoleByDepartment(user, userrole.getDepartment());
                         }));
         return resultMap;
+    }
 
+    public Iterable<Role> findAll() {
+        return roleRepository.findAll();
     }
 }

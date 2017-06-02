@@ -8,6 +8,7 @@ package net.podolanski.dao.repository;
 import java.util.List;
 import net.podolanski.dao.Connection;
 import net.podolanski.dao.Doctype;
+import net.podolanski.dao.Transaction;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -16,4 +17,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ConnectionRepository extends CrudRepository<Connection, Integer> {
     List<Connection> findByDoctype(Doctype doctype);
+
+    Connection findByDoctypeAndTransaction(Doctype doctype, Transaction transaction);
 }

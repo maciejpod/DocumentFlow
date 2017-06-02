@@ -29,7 +29,8 @@
         });
     });
 
-    var i = 3;
+    var i = $('input[id^="pathElementList"]').length;
+    console.log(i);
     $('#addButton').click(function () {
         var appendElement = '<input type="text" class="form-control" id="pathElementList' + i + '.transactionName" name="pathElementList[' + i + '].transactionName" value="" />';
         var appendSelectOptions = '<select class="form-control" id="roleName' + i + '" name="pathElementList[' + i +'].assingnedRole">';

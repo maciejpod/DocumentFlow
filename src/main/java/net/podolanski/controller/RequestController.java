@@ -125,7 +125,7 @@ public class RequestController {
             mav.addObject("request", req);
             mav.addObject("statusList", Status.values());
             mav.addObject("transactionList",
-                    transactionService.getDocumentFlow(req.getDocType()));
+            transactionService.getDocumentFlow(req.getDocType()));
         });
         return mav;
     }

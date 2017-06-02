@@ -5,7 +5,7 @@
  */
 package net.podolanski.service;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +13,7 @@ import net.podolanski.dao.Connection;
 import net.podolanski.dao.Doctype;
 import net.podolanski.dao.Transaction;
 import net.podolanski.dao.repository.ConnectionRepository;
+import net.podolanski.dao.repository.DoctypeRepository;
 import net.podolanski.dao.repository.TransactionRepository;
 import net.podolanski.dto.DocumentPathForm;
 import net.podolanski.dto.PathElement;
@@ -25,63 +26,82 @@ import org.springframework.stereotype.Service;
  *
  * @author maciej
  */
+
 @Service
 public class TransactionService {
 
-    private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
-
-    @Autowired
-    TransactionRepository transactionRepository;
-
-    @Autowired
-    ConnectionRepository connectionRepository;
+    @Autowired TransactionRepository transactionRepository;
+    @Autowired ConnectionService connectionService;
+    @Autowired DoctypeService doctypeService;
 
     public List<Transaction> getDocumentFlow(Doctype doctype) {        
-        return getSortedConnections(doctype)
+        return connectionService.getSortedConnections(doctype)
                 .stream()
                 .map((n) -> n.getTransaction())
                 .collect(Collectors.toList());
     }
-    
-    private List<Connection> getSortedConnections(Doctype doctype) {
-        List<Connection> connectionList = connectionRepository.findByDoctype(doctype);
-        
-        Comparator<Connection> comparator = (o1, o2) -> {
-            return o1.getTransaction().equals(doctype.getTransactionId()) ? -1: 1;
-        };    
-        connectionList.sort(comparator.thenComparing((o1, o2) -> {
-            return o1.getTransaction1().equals(o2.getTransaction()) ? 1: -1;
-        }));
-        return  connectionList;
-    }
 
-    public void createNewDocumentPath(DocumentPathForm documentPathForm) {
-        List<PathElement> pathElementList = documentPathForm.getPathElementList();
-        Doctype docType = null;
-        Iterator<PathElement> pathElementIterator = pathElementList.iterator();
+    public void createNewDocumentPath(Iterator<PathElement> pathElementIterator, Doctype docType, String documentName) {
+        Doctype _docType = docType;
         PathElement prevPathElement = pathElementIterator.next();
-
+        List<Connection> connections = new ArrayList<>();
         while(pathElementIterator.hasNext()) {
             PathElement currentPathElement = pathElementIterator.next();
             Transaction prevTransaction = buildTransaction(prevPathElement);
-            if(docType == null) {
-                docType = new Doctype();
-                docType.setName(documentPathForm.getDocumentName());
-                docType.setTransactionId(prevTransaction);
-            }
             Transaction nextTransaction = buildTransaction(currentPathElement);
-            Connection connection = new Connection(docType, prevTransaction, nextTransaction);
+            if(_docType == null) {
+                doctypeService.createNewDocType(documentName, prevTransaction);
+            }
+            Connection connection = new Connection(_docType, prevTransaction, nextTransaction);
             prevPathElement = currentPathElement;
+            connections.add(connection);
         }
         Transaction prevTransaction = buildTransaction(prevPathElement);
-        Connection connection = new Connection(docType, prevTransaction, docType.getTransactionId());
+        connections.add(new Connection(_docType, prevTransaction, _docType.getTransactionId()));
+        connectionService.save(connections);
+    }
+
+    /**
+     *
+     * @param doctype
+     * @param documentEditForm
+     */
+
+    public void editExistingDocumentPath(Doctype doctype, DocumentPathForm documentEditForm) {
+        List<Connection> connectionList = connectionService.getSortedConnections(doctype);
+        doctype.setName(documentEditForm.getDocumentName());
+        Iterator<PathElement> pathElementIter = documentEditForm.getPathElementList().iterator();
+        Iterator<Transaction> transactionIter = connectionList.stream().map(n -> n.getTransaction()).collect(Collectors.toList()).iterator();
+
+        while(pathElementIter.hasNext()) {
+            if(transactionIter.hasNext()) {
+                editExistingTransaction(pathElementIter.next(), transactionIter.next());
+            } else {
+                createNewDocumentPath(pathElementIter, doctype, doctype.getName());
+            }
+        }
+        while (transactionIter.hasNext()) {
+            connectionService.removeConnection(transactionIter.next(), doctype);
+        }
+        connectionService.setConnectionEndPoint(doctype);
     }
 
     private Transaction buildTransaction(PathElement pathElement) {
         Transaction transaction = new Transaction();
         transaction.setName(pathElement.getTransactionName());
         transaction.setRoleId(pathElement.getAssingnedRole());
+        save(transaction);
         return transaction;
+    }
+
+    private void editExistingTransaction(PathElement pathElement, Transaction transaction) {
+        transaction.setName(pathElement.getTransactionName());
+        transaction.setRoleId(pathElement.getAssingnedRole());
+        save(transaction);
+    }
+
+    public void save(Transaction transaction) {
+        transactionRepository.save(transaction);
     }
 
 }

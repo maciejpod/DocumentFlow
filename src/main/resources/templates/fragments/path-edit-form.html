@@ -4,7 +4,7 @@
 <div class="well" th:fragment="path-edit-form">
     <h3>New request</h3>
     <br/>
-    <form class="form-horizontal" role="form" method="post" th:action="@{/path/new}"
+    <form class="form-horizontal" role="form" method="post" th:action="@{'/path/' + ${id} + '/edit'}"
           th:object="${documentEditForm}">
         <div class="form-group">
             <div class="row">
@@ -16,12 +16,8 @@
                 <input type="text" class="form-control" th:field="*{documentName}" th:value="*{documentName}"/>
             </div>
         </div>
-
-
-
-
         <span id ="listForm">
-            <div class="row">W
+            <div class="row">
                 <div class="alert alert-danger col-lg-8 col-md-offset-2" th:if="${#fields.hasErrors('pathElementList')}" th:errors="*{pathElementList}">
                 </div>
             </div>

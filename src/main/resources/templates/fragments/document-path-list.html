@@ -1,0 +1,28 @@
+<html>
+<body>
+<div class="well" th:fragment="document-path-list">
+    <div class="pull-right">
+        <a href="" data-toggle="tooltip" title="You can click on table row to get request details!" id="tip">
+            <span class="glyphicon glyphicon-question-sign" style="font-size: 25px;"></span>
+        </a>
+    </div>
+    <h3>Path list</h3>
+    <br/>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Document name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="clickable-row" th:each="document: ${documentList}"
+                th:attr="data-href=@{'/path/' + ${document.doctypeId} +'/edit/'}">
+                <td th:text = "${document.name}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
