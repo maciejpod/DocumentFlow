@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 import net.podolanski.dao.Connection;
 import net.podolanski.dao.Doctype;
 import net.podolanski.dao.Transaction;
-import net.podolanski.dao.repository.ConnectionRepository;
-import net.podolanski.dao.repository.DoctypeRepository;
 import net.podolanski.dao.repository.TransactionRepository;
 import net.podolanski.dto.DocumentPathForm;
 import net.podolanski.dto.PathElement;
@@ -29,6 +27,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionService {
+
+    Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
     @Autowired TransactionRepository transactionRepository;
     @Autowired ConnectionService connectionService;
@@ -50,7 +50,7 @@ public class TransactionService {
             Transaction prevTransaction = buildTransaction(prevPathElement);
             Transaction nextTransaction = buildTransaction(currentPathElement);
             if(_docType == null) {
-                doctypeService.createNewDocType(documentName, prevTransaction);
+                _docType = doctypeService.createNewDocType(documentName, prevTransaction);
             }
             Connection connection = new Connection(_docType, prevTransaction, nextTransaction);
             prevPathElement = currentPathElement;
@@ -59,6 +59,9 @@ public class TransactionService {
         Transaction prevTransaction = buildTransaction(prevPathElement);
         connections.add(new Connection(_docType, prevTransaction, _docType.getTransactionId()));
         connectionService.save(connections);
+        for(Connection connection: connectionService.getSortedConnections(_docType)) {
+            logger.info("f: " + connection.getTransaction().getName() + " n: " + connection.getTransaction1().getName() + " d: " + connection.getDoctype().getName());
+        }
     }
 
     /**

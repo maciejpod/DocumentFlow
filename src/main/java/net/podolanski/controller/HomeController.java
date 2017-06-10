@@ -32,7 +32,7 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/home")
+    @GetMapping(path = {"/home", "/"})
     ModelAndView home(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         ModelAndView mav = new ModelAndView("home");

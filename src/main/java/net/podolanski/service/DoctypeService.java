@@ -14,11 +14,12 @@ import org.springframework.stereotype.Service;
 public class DoctypeService {
     @Autowired DoctypeRepository doctypeRepository;
 
-    public void createNewDocType(String name, Transaction beginingTransaction) {
+    public Doctype createNewDocType(String name, Transaction beginingTransaction) {
         Doctype doctype = new Doctype();
         doctype.setName(name);
         doctype.setTransactionId(beginingTransaction);
         doctypeRepository.save(doctype);
+        return doctype;
     }
 
     public Doctype findOne(Integer id) {
@@ -27,5 +28,9 @@ public class DoctypeService {
 
     public Iterable<Doctype> findAll() {
         return doctypeRepository.findAll();
+    }
+
+    public Doctype findByName(String documentName) {
+        return  doctypeRepository.findByName(documentName);
     }
 }

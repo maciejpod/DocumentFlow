@@ -17,7 +17,6 @@ import java.util.List;
  * Created by maciej on 23.05.17.
  */
 
-//dodać zapisywanie w bazie
 @Service
 public class ConnectionService {
 

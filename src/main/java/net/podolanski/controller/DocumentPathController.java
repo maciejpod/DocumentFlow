@@ -8,8 +8,6 @@ import net.podolanski.service.DoctypeService;
 import net.podolanski.service.TransactionService;
 import net.podolanski.service.UserRoleService;
 import net.podolanski.validator.DocumentPathFormValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,16 +21,12 @@ import javax.validation.Valid;
  */
 @Controller
 @RequestMapping("/path/")
-public class DocumentPathController
-{
-
+public class DocumentPathController {
     @Autowired TransactionService transactionService;
     @Autowired DoctypeService doctypeService;
     @Autowired UserRoleService roleService;
     @Autowired DocumentPathFormValidator documentPathFormValidator;
     @Autowired ConnectionService connectionService;
-
-    Logger logger = LoggerFactory.getLogger(DocumentPathController.class);
 
     @ModelAttribute("documentPathForm")
     private DocumentPathForm documentPathForm() {
@@ -56,9 +50,7 @@ public class DocumentPathController
     @PostMapping("/new")
     String processDocumentPathForm(@Valid DocumentPathForm documentPathForm, BindingResult bindingResult) {
         documentPathFormValidator.validate(documentPathForm, bindingResult);
-        if(bindingResult.hasErrors()) {
-            return "document-path";
-        }
+        if(bindingResult.hasErrors()) return "document-path";
         transactionService.createNewDocumentPath(documentPathForm.getPathElementList().iterator(),
                 null, documentPathForm.getDocumentName());
         return "redirect:/home";
@@ -73,7 +65,7 @@ public class DocumentPathController
     }
 
     @PostMapping("/{id}/edit")
-    String processDocumentPathFormEdit(@PathVariable Integer id, DocumentPathForm documentEditForm) {
+    String processDocumentPathFormEdit(@PathVariable Integer id, @Valid DocumentPathForm documentEditForm, BindingResult bindingResult) {
         Doctype doctype = doctypeService.findOne(id);
         transactionService.editExistingDocumentPath(doctype, documentEditForm);
         return "redirect:/path/";

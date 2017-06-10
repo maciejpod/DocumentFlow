@@ -30,7 +30,7 @@ INSERT INTO t_connection VALUES(3, 1, 1);
 
 INSERT INTO t_department VALUES(2, null, 'Department 1');
 INSERT INTO t_department VALUES(3, null, 'Department 2');
-
+--user role department nick2 - id 2 department 1 - id 2 role 2id - employee
 INSERT INTO t_userrole VALUES(2, 2, 2);
 INSERT INTO t_userrole VALUES(3, 1, 2);
 INSERT INTO t_userrole VALUES(4, 3, 2);

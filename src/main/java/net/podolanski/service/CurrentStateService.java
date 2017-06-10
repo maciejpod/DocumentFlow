@@ -9,14 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import net.podolanski.dao.Status;
-import net.podolanski.dao.CurrentState;
-import net.podolanski.dao.Department;
-import net.podolanski.dao.Doctype;
-import net.podolanski.dao.Request;
-import net.podolanski.dao.Transaction;
-import net.podolanski.dao.User;
-import net.podolanski.dao.Userrole;
+
+import net.podolanski.dao.*;
 import net.podolanski.dao.repository.CurrentStateRepository;
 import net.podolanski.dao.repository.DoctypeRepository;
 import net.podolanski.dao.repository.TransactionRepository;
@@ -34,8 +28,11 @@ public class CurrentStateService {
     @Autowired DoctypeRepository doctypeRepository;
     @Autowired UserRoleRepository userRoleRepository;
     @Autowired TransactionRepository transactionRepository;
+    @Autowired ConnectionService connectionService;
     @Autowired CurrentStateRepository currentStateRepository;
     @Autowired RequestService requestService;
+
+    Logger logger = LoggerFactory.getLogger(CurrentStateService.class);
 
     public void deleteByRequest(Request request) {
         currentStateRepository.deleteByRequest(request);
@@ -91,10 +88,14 @@ public class CurrentStateService {
         Set<CurrentState> currentStateUpdateList = new HashSet<>();
         currentStateList.forEach((cs) -> {
             Request request = cs.getRequest();
+            List<Connection> sortedConnections = connectionService.getSortedConnections(request.getDocType());
+            for(Connection con: sortedConnections) {
+                logger.info("p: " + con.getTransaction().getName() + " n: "+ con.getTransaction1().getName() + " d: " + con.getDoctype().getName());
+            }
             Transaction transaction = transactionRepository
                     .findNextTransaction(cs.getTransaction(), request.getDocType());
 
-            if (!isLastStep(transaction, request.getDocType())) {
+            if (transaction != null && !isLastStep(transaction, request.getDocType())) {
                 Department newDepartment = cs.getDepartment();
 
                 List<Userrole> userRole = userRoleRepository
